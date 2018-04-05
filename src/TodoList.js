@@ -4,8 +4,8 @@ class TodoList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      judul: props.judul,
-      konten: props.deskripsi,
+      judul: this.props.item.judul,
+      konten: this.props.item.konten,
       preview: true
     };
 
@@ -14,17 +14,28 @@ class TodoList extends React.Component {
     this.handleIsiChange = this.handleIsiChange.bind(this);
   }
 
-  static defaultProps = {
-    id: 0,
-    judul: 'Loading...',
-    deskripsi: 'Loading...',
-    mode: ''
-  }
+  // static defaultProps = {
+  //   id: 0,
+  //   judul: 'Loading...',
+  //   deskripsi: 'Loading...',
+  //   mode: ''
+  // }
 
   handleClick() {
-		this.setState(function(prevState) {
-			return {preview: !prevState.preview};
-		});
+    if (this.state.preview){
+      this.setState({ preview: false })
+
+    }
+    else {
+      this.setState({ preview: true })
+  		this.props.onItemChanged(
+        {
+          id: this.props.item.id,
+          judul: this.state.judul,
+          konten: this.state.konten
+        }
+      )
+    }
 	}
 
   handleJudulChange(event) {
@@ -50,24 +61,22 @@ class TodoList extends React.Component {
       previewStyle.display = 'block';
 
 
-
     return (
       <div>
         <div style={previewStyle}>
-          <h3>{this.state.judul}</h3>
-          <p>{this.state.konten}</p>
+          <h3>{this.props.item.judul}</h3>
+          <p>{this.props.item.konten}</p>
           <div style={previewEditStyle}>
           </div>
         </div>
         <div style={editStyle}>
-          <label> Judul: </label>
               <input id="judul" type="text" placeholder="masukan namamu"
                       onChange={this.handleJudulChange} value={this.state.judul}/>
-          <label> Isi: </label>
+
               <input id="konten" type="text" placeholder="masukan namamu"
                       onChange={this.handleIsiChange} value={this.state.konten}/>
         </div>
-        <button onClick={this.handleClick}>{this.state.preview ? 'Edit' : 'Preview'}</button>
+        <button onClick={this.handleClick}>{this.state.preview ? 'Edit' : 'Update'}</button>
       </div>
     );
   }

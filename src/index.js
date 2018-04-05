@@ -8,22 +8,24 @@ import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
+window.items = [
+  {
+    id: 1,
+    judul: "belajar",
+    konten: "react",
+    editMode: false
+  }
+]
 
 class TodoApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [
-        {
-          id: 1,
-          judul: "belajar",
-          konten: "react",
-          editMode: false
-        }
-      ]
+      items: window.items
     };
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.onItemChanged = this.onItemChanged.bind(this);
   }
 
   addItem(newItem){
@@ -36,36 +38,49 @@ class TodoApp extends React.Component {
     //   editMode: false
     // };
 
-  // mengubah items dengan setState
-  // variable items untuk menampilkan data di view berdasarkan inputan this._inputElement
-  var allItems = this.state.items.concat([newItem]);
+    // mengubah items dengan setState
+    // variable items untuk menampilkan data di view berdasarkan inputan this._inputElement
+    var allItems = this.state.items.concat([newItem]);
     this.setState({items: allItems});
+  }
+
+  onItemChanged(updatedItem) {
+    const _itemIdx = this.state.items.findIndex(function(_item) {
+        return _item.id === updatedItem.id
+      }
+    )
+    window.items[_itemIdx] = Object.assign({}, updatedItem)
+
+    this.setState({ items: window.items })
   }
 
   deleteItem(ids){
     var filteredItems = this.state.items.filter(function (itemdel) {
-      return (itemdel.id != ids);
+      return (itemdel.id !== ids);
     });
 
-  this.setState({
-    items: filteredItems
-  });
+    this.setState({
+      items: filteredItems
+    });
   }
 
   render() {
     const _deleteItem = this.deleteItem
-    const _changeEditMode = this.changeEditMode
+    const _onItemChanged = this.onItemChanged
     return (
       <div>
+      <div className="main">
           <TodoForm onFormSubmit={this.addItem}/>
           {this.state.items.map(function(item) {
+            // {this.state.items.map(item => {
             return (
-              <div key={item.id}>
-                <TodoList judul={item.judul} deskripsi={item.konten} mode={item.editMode} />
+              <div className="form" key={item.id}>
+                <TodoList item={item} onItemChanged={_onItemChanged} />
                 <button onClick={() => _deleteItem(item.id)}> X </button>
               </div>
             )
           })}
+      </div>
       </div>
     );
   }

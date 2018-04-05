@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import './index.css';
 
 class TodoForm extends React.Component {
   constructor(props) {
@@ -37,19 +37,27 @@ class TodoForm extends React.Component {
   render() {
     return (
       <div>
+      <div className="form">
         <form onSubmit= {this.handleaddItem}>
-          <p>
-          <label> Judul : </label>
-            <input type="text" ref="judul" onChange={this.onChangeTitle}
-              value={this.state.judul} placeholder="Enter Item"/>
-          </p>
-          <p>
-          <label> Isi : </label>
-            <input type="text" ref="isi" onChange={this.onChangeContent}
-              value={this.state.isi} placeholder="Enter Item"/>
-          </p>
-          <input type="submit" value="Add Item"/>
+        <table cellPadding="5" cellSpacing="10">
+        <tbody>
+          <tr>
+          <td> Judul : </td>
+          <td><input type="text" ref="judul" onChange={this.onChangeTitle}
+              value={this.state.judul} placeholder="Enter Item"/> </td>
+          </tr>
+          <tr>
+          <td> Isi : </td>
+          <td><input type="text" ref="isi" onChange={this.onChangeContent}
+              value={this.state.isi} placeholder="Enter Item"/></td>
+          </tr>
+          <tr>
+          <td colSpan="2" align="center"><input type="submit" value="Add Item"/></td>
+          </tr>
+        </tbody>
+        </table>
         </form>
+      </div>
       </div>
     )
   }

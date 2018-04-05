@@ -1,5 +1,21 @@
 body {
-  margin: 0;
-  padding: 0;
+  padding: 50px;
+  background-color: #8AE104;
   font-family: sans-serif;
+}
+#root1 {
+  display: flex;
+  justify-content: center;
+}
+
+.form {
+  border: 2px solid #000000;
+  padding: 10px;
+  background-color: #04C3E1;
+}
+.main .header input {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #FFF;
+  width: 165px;
 }
