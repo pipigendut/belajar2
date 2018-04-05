@@ -14,18 +14,20 @@ class TodoForm extends React.Component {
   handleaddItem(e){
     console.log('handleAddItem invoked');
     e.preventDefault();
-    var newItem = {
+    var newItemm = {
       konten: this.state.content,
       judul: this.state.title,
       id: Date.now(),
       editMode: false
     }
-    this.props.onFormSubmit(newItem);
-    this.setState ({item: ''});
+    this.props.onFormSubmit(newItemm);
+    this.refs.judul.value = "";
+    this.refs.isi.value = "";
   }
 
   onChangeTitle (event) {
     this.setState({ title: event.target.value })
+
   }
 
   onChangeContent (event) {
